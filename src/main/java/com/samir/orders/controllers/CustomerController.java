@@ -19,7 +19,7 @@ public class CustomerController
     private CustomerService customerService;
 
     // GET http://localhost:2019/customer/order
-    @GetMapping(value = "/orders",
+    @GetMapping(value = "/order",
                 produces = {"application/json"})
     public ResponseEntity<?> listAllCustomers()
     {
@@ -31,7 +31,7 @@ public class CustomerController
 
     @PostMapping(value = "/new",
                  consumes = {"application/json"})
-    public ResponseEntity<?> addNewRestaurant(@Valid
+    public ResponseEntity<?> addNewCustomer(@Valid
                                               @RequestBody
                                               Customer newCustomer)
     {
@@ -40,6 +40,20 @@ public class CustomerController
     }
 
     // PUT http://localhost:2019/customer/update/2
+    @PutMapping(value = "/update/{custcode}",
+                consumes = {"application/json"})
+    public ResponseEntity<?> updateACustomer(@RequestBody Customer customer,
+                                               @PathVariable long custcode)
+    {
+        customerService.update(customer, custcode);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     // DELETE http://localhost:2019/customer/delete/2
+    @DeleteMapping(value = "/delete/{custcode}")
+    public ResponseEntity<?> deleteCustomerById(@PathVariable long custcode)
+    {
+        customerService.delete(custcode);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

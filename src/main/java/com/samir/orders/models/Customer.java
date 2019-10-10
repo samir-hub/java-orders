@@ -29,13 +29,15 @@ public class Customer
 
     @OneToMany(mappedBy = "customer",
                cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("customer")
     private List<Order> orders = new ArrayList<>();
+
 
 
     @ManyToOne
     @JoinColumn(name = "agentcode",
                 nullable = false)
-    @JsonIgnoreProperties("customer")
+    @JsonIgnoreProperties("customers")
     private Agent agent;
 
     public Customer()

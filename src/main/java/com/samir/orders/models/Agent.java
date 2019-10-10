@@ -25,7 +25,6 @@ public class Agent
 
     @OneToMany(mappedBy = "agent",
                cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("agent")
     private List<Customer> customers = new ArrayList<>();
 
     public Agent()
