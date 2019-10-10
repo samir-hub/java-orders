@@ -5,10 +5,9 @@ import com.samir.orders.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,15 +19,25 @@ public class CustomerController
     private CustomerService customerService;
 
     // GET http://localhost:2019/customer/order
-    @GetMapping(value = "/order",
+    @GetMapping(value = "/orders",
                 produces = {"application/json"})
     public ResponseEntity<?> listAllCustomers()
     {
-        List<Customer> myList = customerService.findall();
+        List<Customer> myList = customerService.findAll();
         return new ResponseEntity<>(myList, HttpStatus.OK);
     }
 
     // POST http://localhost:2019/customer/new
+
+    @PostMapping(value = "/new",
+                 consumes = {"application/json"})
+    public ResponseEntity<?> addNewRestaurant(@Valid
+                                              @RequestBody
+                                              Customer newCustomer)
+    {
+        customerService.save(newCustomer);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
     // PUT http://localhost:2019/customer/update/2
 

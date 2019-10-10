@@ -26,7 +26,7 @@ public class Order
     {
     }
 
-    public Order(double ordamount, double advanceamt, String orddescription, Customer customer)
+    public Order(double ordamount, double advanceamt,Customer customer, String orddescription)
     {
         this.ordamount = ordamount;
         this.advanceamt = advanceamt;

@@ -3,6 +3,8 @@ package com.samir.orders.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -25,8 +27,9 @@ public class Customer
     private double outstandingamt;
     private String phone;
 
-    @OneToMany(mappedBy = "customers",
+    @OneToMany(mappedBy = "customer",
                cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
 
 
     @ManyToOne
@@ -52,6 +55,16 @@ public class Customer
         this.outstandingamt = outstandingamt;
         this.phone = phone;
         this.agent = agent;
+    }
+
+    public List<Order> getOrders()
+    {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders)
+    {
+        this.orders = orders;
     }
 
     public long getCustcode()

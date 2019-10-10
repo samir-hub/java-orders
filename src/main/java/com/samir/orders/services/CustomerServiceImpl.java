@@ -11,7 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Transactional
+//@Transactional
 @Service(value = "customerService")
 public class CustomerServiceImpl implements CustomerService
 {
@@ -19,7 +19,7 @@ public class CustomerServiceImpl implements CustomerService
     private CustomerRepository custrepos;
 
     @Override
-    public List<Customer> findall()
+    public List<Customer> findAll()
     {
         List<Customer> rtnList = new ArrayList<>();
         custrepos.findAll()
@@ -34,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService
         return custrepos.findById(id).orElseThrow(() -> new EntityNotFoundException("Not Found " + id));
     }
 
-    @Transactional
+//    @Transactional
     @Override
     public Customer save(Customer customer)
     {
@@ -51,13 +51,14 @@ public class CustomerServiceImpl implements CustomerService
         newCustomer.setOutstandingamt(customer.getOutstandingamt());
         newCustomer.setPhone(customer.getPhone());
 
-//        for (Order o : customer.getOrders())
-//        {
-//            newCustomer.getOrders().add(new Order(o.getOrdamount(),
-//                    o.getOrddescription(),
-//                    o.getAdvanceamt(),
-//                    newCustomer));
-//        }
+        for (Order o : customer.getOrders())
+    {
+        newCustomer.getOrders().add(new Order(o.getOrdamount(),
+                o.getAdvanceamt(),
+                newCustomer,
+                o.getOrddescription()
+                ));
+    }
 
         return custrepos.save(newCustomer);
     }
